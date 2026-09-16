@@ -1,0 +1,26 @@
+# ── 模型权重：0.6B 968 MiB + 0.1B 约 700 MiB，绝不入库 ──
+# 由 scripts/setup_audio8.py 下载
+vendor/
+
+# ── Python 环境与下载缓存 ──
+.venv/
+**/.venv/
+**/__pycache__/
+*.py[cod]
+models/
+
+# ── 生成物（可重新跑出来）──
+data/bench/
+data/out/
+*.log
+
+# ── 隐私：你要克隆的声音样本、音色档案 ──
+# 音色档案很小（几 KB），但它是从你的录音里提取的，属于个人生物特征，不入库。
+voices/
+data/voices/
+data/recordings/
+*.local.wav
+*.local.txt
+
+# ── 密钥 ──
+.env

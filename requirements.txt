@@ -1,0 +1,21 @@
+# 我们自己的后端依赖。
+#
+# 声音克隆（Audio8）不在这里——它是独立的本地服务，有各自的 venv，
+# 由 scripts/setup_audio8.py 拉取并按 vendor/Audio8_TTS/onnx_runtime/requirements.txt
+# 安装。好处是主项目**完全不需要 torch / transformers / coqui-tts**，
+# 依赖体积从 4-6 GB 降到约 200 MB。
+
+# 语音识别：基于 CTranslate2，不需要 torch，CPU 上很快
+faster-whisper
+
+# Web 服务（浏览器 <-> 后端 WebSocket）
+fastapi
+uvicorn[standard]
+python-multipart
+
+# 工具
+httpx
+python-dotenv
+pyyaml
+soundfile
+numpy
