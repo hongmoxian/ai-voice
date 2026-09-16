@@ -1,21 +1,30 @@
-# 我们自己的后端依赖。
+# 单一 venv 同时满足「我们自己的后端」和「Audio8 ONNX 运行时（0.6B）」。
 #
-# 声音克隆（Audio8）不在这里——它是独立的本地服务，有各自的 venv，
-# 由 scripts/setup_audio8.py 拉取并按 vendor/Audio8_TTS/onnx_runtime/requirements.txt
-# 安装。好处是主项目**完全不需要 torch / transformers / coqui-tts**，
-# 依赖体积从 4-6 GB 降到约 200 MB。
+# 声音克隆不需要 torch / transformers / coqui-tts —— Audio8 走的是 ONNX Runtime，
+# 所以整个项目依赖约 200 MB，而不是 4-6 GB。
+#
+# 注意：0.1B 版本另有独立 venv（它要求 onnxruntime<1.24，与这里冲突），
+# 由 vendor/Audio8_TTS/onnx_runtime_0_1b_int8/setup.sh 自行创建。
 
-# 语音识别：基于 CTranslate2，不需要 torch，CPU 上很快
+# ── Audio8 ONNX 运行时（版本沿用官方清单，保证行为一致）──
+onnxruntime==1.24.4
+scipy==1.17.1
+numpy==2.4.3
+soundfile==0.13.1
+# 官方用 --no-deps 装它以避免拖入整棵 HF 依赖树；我们要用 huggingface_hub
+# 下载模型，所以正常安装即可。
+tokenizers==0.22.2
+huggingface_hub
+
+# ── 语音识别：基于 CTranslate2，不需要 torch，CPU 上很快 ──
 faster-whisper
 
-# Web 服务（浏览器 <-> 后端 WebSocket）
-fastapi
-uvicorn[standard]
-python-multipart
+# ── Web 服务（浏览器 <-> 后端 WebSocket）──
+fastapi==0.135.2
+uvicorn[standard]==0.42.0
+python-multipart==0.0.22
 
-# 工具
+# ── 工具 ──
 httpx
 python-dotenv
 pyyaml
-soundfile
-numpy
