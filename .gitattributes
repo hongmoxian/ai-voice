@@ -1,0 +1,16 @@
+# 跨平台换行统一：Windows 和 macOS 之间来回克隆不会产生满仓库的换行差异。
+# 这是必要的——下一步会给 macOS 加 .sh 启动脚本，CRLF 会让 bash 直接报错。
+* text=auto eol=lf
+
+# Windows 专属脚本必须保持 CRLF
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 二进制资源不要做任何换行/编码转换
+*.wav binary
+*.npy binary
+*.onnx binary
+*.data binary
+*.webp binary
+*.png binary
